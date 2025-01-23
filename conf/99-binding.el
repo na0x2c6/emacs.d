@@ -1,6 +1,12 @@
 ;; Assign C-h to delete the previous character
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
+(defun paste-from-system-clipboard ()
+  "Paste text from the system clipboard."
+  (interactive)
+  (insert (gui-get-selection 'CLIPBOARD)))
+(global-set-key (kbd "s-v") 'paste-from-system-clipboard)
+
 ;; embark
 (global-set-key (kbd "C-S-a") 'embark-act)
 
