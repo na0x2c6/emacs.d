@@ -1,11 +1,30 @@
 ;; Assign C-h to delete the previous character
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
-(defun paste-from-system-clipboard ()
+(defun my/paste-from-system-clipboard ()
   "Paste text from the system clipboard."
   (interactive)
   (insert (gui-get-selection 'CLIPBOARD)))
-(global-set-key (kbd "s-v") 'paste-from-system-clipboard)
+
+(defun my/copy-to-system-clipboard ()
+  "Copy selected region to the system clipboard."
+  (interactive)
+  (if (use-region-p)
+      (let ((text (buffer-substring-no-properties (region-beginning) (region-end))))
+	(x-set-selection 'CLIPBOARD text)
+	(message "Copied to system clipboard"))
+    (message "No region selected")))
+
+(defun my/toggle-select-enable-clipboard ()
+  "Toggle the value of `select-enable-clipboard`."
+  (interactive)
+  (setq select-enable-clipboard (not select-enable-clipboard))
+  (message "select-enable-clipboard is now %s"
+           (if select-enable-clipboard "enabled" "disabled")))
+
+(global-set-key (kbd "s-v") 'my/paste-from-system-clipboard)
+(global-set-key (kbd "s-c") 'my/copy-to-system-clipboard)
+(global-set-key (kbd "C-c k") 'my/toggle-select-enable-clipboard)
 
 ;; embark
 (global-set-key (kbd "C-S-a") 'embark-act)
