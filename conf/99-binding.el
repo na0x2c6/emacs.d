@@ -55,3 +55,6 @@
 
 ;; Avy + Isearch
 (define-key isearch-mode-map (kbd "M-j") 'avy-isearch)
+
+;; eldoc-box
+(define-key evil-normal-state-map (kbd "C-k") 'eldoc-box-help-at-point)

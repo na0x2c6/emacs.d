@@ -306,6 +306,9 @@
 (use-package eglot
   :straight t)
 
+(use-package eldoc-box
+  :straight t)
+
 ;; quickrun
 (use-package quickrun
   :straight t)
