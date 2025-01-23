@@ -278,11 +278,16 @@
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 
 ;; go-mode
-(use-package eglot
+(use-package go-mode
   :straight t
   :config
-  (add-to-list 'eglot-server-programs '(go-mode . ("gopls")))
-  (add-hook 'go-mode-hook #'eglot-ensure))
+  (add-hook 'go-mode-hook 'lsp-deferred))
+
+; (use-package eglot
+;   :straight t
+;   :config
+;   (add-to-list 'eglot-server-programs '(go-mode . ("gopls")))
+;   (add-hook 'go-mode-hook #'eglot-ensure))
 
 (use-package eglot-booster
   :straight (el-patch :type git :host github :repo "jdtsmith/eglot-booster")
@@ -290,6 +295,11 @@
   :config
     (when (executable-find "emacs-lsp-booster")
 	(eglot-booster-mode)))
+
+(use-package markdown-mode
+  :straight t
+  :mode ("\\.md\\'" . gfm-mode)
+  :init (setq markdown-command '("pandoc" "--from=markdown" "--to=html5")))
 
 ;; https://github.com/joaotavora/eglot/discussions/1436#discussioncomment-11034903
 ;; lsp
