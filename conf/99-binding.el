@@ -57,4 +57,4 @@
 (define-key isearch-mode-map (kbd "M-j") 'avy-isearch)
 
 ;; eldoc-box
-(define-key evil-normal-state-map (kbd "C-k") 'eldoc-box-help-at-point)
+(define-key evil-normal-state-map (kbd "K") 'eldoc-box-help-at-point)
