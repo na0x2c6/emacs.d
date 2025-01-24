@@ -305,7 +305,9 @@
   :straight t)
 
 (use-package eldoc-box
-  :straight t)
+  :straight t
+  :config
+  (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t))
 
 ;; quickrun
 (use-package quickrun
