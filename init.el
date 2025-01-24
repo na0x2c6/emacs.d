@@ -36,9 +36,6 @@
 
 (load custom-file)
 
-
-(define-key global-map (kbd "C-T") 'other-window)
-
 (use-package undo-tree
   :straight t
   :config
