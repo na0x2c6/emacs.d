@@ -47,7 +47,8 @@
 (define-key evil-normal-state-map (kbd "[ c") 'git-gutter:previous-hunk)
 
 ;; git-link
-(global-set-key (kbd "C-c C-g l") 'git-link)
+(global-set-key (kbd "C-c l") 'my/git-link-copy-only)
+(global-set-key (kbd "C-c o") 'my/git-link-open-browser)
 
 ;; avy
 (global-set-key (kbd "C-;") 'avy-goto-char-timer)

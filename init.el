@@ -36,8 +36,6 @@
 
 (load custom-file)
 
-;; toggle line truncate
-(define-key global-map (kbd "C-c l") 'toggle-truncate-lines)
 
 (define-key global-map (kbd "C-T") 'other-window)
 
@@ -418,8 +416,7 @@
 (use-package git-link
   :straight t
   :config
-  ;(setq git-link-use-commit t)
-  (setq git-link-add-to-kill-ring nil)
+  (setq git-link-use-commit t)
   (setq git-link-open-in-browser t))
 
 ;; max lines for completion
