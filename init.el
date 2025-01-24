@@ -126,29 +126,21 @@
 (use-package fussy
   :straight t
   :config
-  (setq fussy-score-ALL-fn 'fussy-fzf-score)
   (setq fussy-filter-fn 'fussy-filter-default)
   (setq fussy-use-cache t)
   (setq fussy-compare-same-score-fn 'fussy-histlen->strlen<)
   (fussy-setup)
   (fussy-eglot-setup))
 
-(use-package fzf-native
+(use-package flx-rs
   :straight
-  (:repo "dangduc/fzf-native"
-         :host github
-         :files (:defaults "bin"))
+  (flx-rs
+   :repo "jcs-elpa/flx-rs"
+   :fetcher github
+   :files (:defaults "bin"))
   :config
-  (fzf-native-load-dyn)
-  (setq fussy-score-fn 'fussy-fzf-native-score))
-
-;; https://github.com/minad/corfu/issues/136#issuecomment-1052843656
-;(use-package hotfuzz
-;  :straight t
-;  :config
-;  (setq fussy-score-fn 'fussy-hotfuzz-score)
-;    ; (completion-category-overrides '((eglot (styles . (hotfuzz)))))
-;  )
+  (setq fussy-score-fn 'fussy-flx-rs-score)
+  (flx-rs-load-dyn))
 
 (use-package corfu
   :straight t
