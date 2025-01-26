@@ -352,6 +352,11 @@
 (use-package avy
   :straight t)
 
+(use-package open-junk-file
+  :straight t
+  :config
+  (setq open-junk-file-format "~/org/memo/%Y-%m-%d_%H%M%S.org"))
+
 (defvar my/consult--source-project-file
   `(:name "Project Whole File"
           :narrow   (?p . "Project")

@@ -31,6 +31,12 @@
 (global-set-key (kbd "s-c") 'my/copy-to-system-clipboard)
 (global-set-key (kbd "C-c k") 'my/toggle-select-enable-clipboard)
 
+;; org-mode
+
+(global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-x j") 'open-junk-file)
+
 ;; embark
 (global-set-key (kbd "C-S-a") 'embark-act)
 
