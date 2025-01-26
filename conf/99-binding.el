@@ -27,6 +27,10 @@
   (message "select-enable-clipboard is now %s"
            (if select-enable-clipboard "enabled" "disabled")))
 
+(global-set-key (kbd "s-t") 'tab-new)
+(global-set-key (kbd "S-s-t") 'tab-undo)
+(global-set-key (kbd "s-w") 'tab-close)
+
 (global-set-key (kbd "s-v") 'my/paste-from-system-clipboard)
 (global-set-key (kbd "s-c") 'my/copy-to-system-clipboard)
 (global-set-key (kbd "C-c k") 'my/toggle-select-enable-clipboard)
