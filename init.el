@@ -357,6 +357,15 @@
   :config
   (setq open-junk-file-format "~/org/memo/%Y-%m-%d_%H%M%S.org"))
 
+(use-package hl-todo
+  :straight t
+  :config
+  (global-hl-todo-mode)
+  (setq hl-todo-keyword-faces
+      '(("TODO"   . "#FFFF00")
+        ("FIXME"  . "#FF0000")
+        ("NOTE"   . "#28ABE3"))))
+
 (defvar my/consult--source-project-file
   `(:name "Project Whole File"
           :narrow   (?p . "Project")
