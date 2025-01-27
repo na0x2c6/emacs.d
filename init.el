@@ -366,6 +366,11 @@
         ("FIXME"  . "#FF0000")
         ("NOTE"   . "#28ABE3"))))
 
+(use-package dtrt-indent
+  :straight t
+  :config
+  (dtrt-indent-global-mode))
+
 (defvar my/consult--source-project-file
   `(:name "Project Whole File"
           :narrow   (?p . "Project")
