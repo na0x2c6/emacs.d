@@ -18,6 +18,25 @@
 
 (advice-add 'org-archive-subtree :before #'my/set-archive-location)
 
+(defun auto-git-commit-org ()
+  "Automatically commit and push changes in ~/org if it's a git repository."
+  (let* ((org-dir (expand-file-name "~/org"))
+         (default-directory org-dir))
+    
+    (when (vc-git-root org-dir)
+      (let ((git-status (shell-command-to-string "git status --porcelain")))
+        (when (not (string-empty-p git-status))
+          (let ((timestamp (format-time-string "%Y-%m-%d %H:%M:%S")))
+            (shell-command "git add -A")
+            (shell-command (format "git commit -m 'Auto commit: %s'" timestamp))
+            (shell-command "git push origin HEAD")))))))
+
+(add-hook 'after-save-hook
+          (lambda ()
+            (when (string-prefix-p
+                   (expand-file-name "~/org")
+                   (buffer-file-name))
+              (auto-git-commit-org))))
 
 ; (setq org-log-done 'time)
 
