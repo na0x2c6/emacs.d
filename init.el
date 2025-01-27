@@ -1,6 +1,7 @@
 (desktop-save-mode 1)
 (tab-bar-mode 1)
 (cua-mode)
+(global-auto-revert-mode 1)
 (setq cua-enable-cua-keys nil)
 
 ;; for staignt
@@ -312,7 +313,8 @@
 ;; magit
 (use-package magit
   :straight t
-  :config)
+  :config
+  (magit-auto-revert-mode))
 
 ;; git-gutter
 (use-package git-gutter
