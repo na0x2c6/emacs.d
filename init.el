@@ -373,6 +373,11 @@
   :config
   (dtrt-indent-global-mode))
 
+(use-package popwin
+  :straight t
+  :config
+  (popwin-mode 1))
+
 (defvar my/consult--source-project-file
   `(:name "Project Whole File"
           :narrow   (?p . "Project")
