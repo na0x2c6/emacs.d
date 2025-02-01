@@ -4,6 +4,7 @@
 ;; toggle line truncate
 (define-key global-map (kbd "C-c L") 'toggle-truncate-lines)
 
+(define-key evil-normal-state-map (kbd "s-s") 'save-buffer)
 (define-key evil-normal-state-map (kbd "C-t") 'other-window)
 
 (defun my/paste-from-system-clipboard ()
