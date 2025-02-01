@@ -10,14 +10,14 @@
 (defun my/paste-from-system-clipboard ()
   "Paste text from the system clipboard."
   (interactive)
-  (insert (gui-get-selection 'CLIPBOARD)))
+  (insert (gui--selection-value-internal 'CLIPBOARD)))
 
 (defun my/copy-to-system-clipboard ()
   "Copy selected region to the system clipboard."
   (interactive)
   (if (use-region-p)
       (let ((text (buffer-substring-no-properties (region-beginning) (region-end))))
-	(x-set-selection 'CLIPBOARD text)
+	(gui-set-selection 'CLIPBOARD text)
 	(message "Copied to system clipboard"))
     (message "No region selected")))
 
@@ -114,11 +114,12 @@ If buffer is not visiting a file, copy buffer name instead."
            
            ;; Default case
            (t file-path))))
+    (gui-set-selection 'CLIPBOARD result-path)
     
     ;; Copy to clipboard
-    (with-temp-buffer
-      (insert result-path)
-      (clipboard-kill-ring-save (point-min) (point-max)))
+    ; (with-temp-buffer
+    ;   (insert result-path)
+    ;   (clipboard-kill-ring-save (point-min) (point-max)))
     
     (message "Copied to clipboard: %s" result-path)))
 
