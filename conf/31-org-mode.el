@@ -23,12 +23,17 @@
 
 (advice-add 'org-archive-subtree :before #'my/set-archive-location)
 
-(defun auto-git-commit-org ()
-  "Automatically commit and push changes in ~/org if it's a git repository."
-  (let* ((org-dir (expand-file-name "~/org"))
-         (default-directory org-dir))
-    
-    (when (vc-git-root org-dir)
+(defcustom my/auto-git-commit-directories '("~/org")
+  "List of directories to automatically commit and push changes if they are git repositories.
+Each path should be a string representing the directory path."
+  :type '(repeat string)
+  :group 'my-auto-git)
+
+(defun my/auto-git-commit-directory (dir)
+  "Automatically commit and push changes in DIR if it's a git repository."
+  (let* ((full-dir (expand-file-name dir))
+         (default-directory full-dir))
+    (when (vc-git-root full-dir)
       (let ((git-status (shell-command-to-string "git status --porcelain")))
         (when (not (string-empty-p git-status))
           (let ((timestamp (format-time-string "%Y-%m-%d %H:%M:%S")))
@@ -36,12 +41,20 @@
             (shell-command (format "git commit -m 'Auto commit: %s'" timestamp))
             (shell-command "git push origin HEAD")))))))
 
+(defun my/auto-git-commit-all ()
+  "Run auto-commit for all directories in `my/auto-git-commit-directories'."
+  (dolist (dir my/auto-git-commit-directories)
+    (my/auto-git-commit-directory dir)))
+
 (add-hook 'after-save-hook
           (lambda ()
-            (when (string-prefix-p
-                   (expand-file-name "~/org")
-                   (buffer-file-name))
-              (auto-git-commit-org))))
+            (when (buffer-file-name)
+              (let ((file-path (buffer-file-name)))
+                (dolist (dir my/auto-git-commit-directories)
+                  (when (string-prefix-p
+                         (expand-file-name dir)
+                         file-path)
+                    (my/auto-git-commit-directory dir)))))))
 
 ; (setq org-log-done 'time)
 
