@@ -442,6 +442,9 @@
   :config
   (advice-add 'org-capture :before #'org-super-links-store-link))
 
+(use-package ox-gfm
+  :straight t)
+
 ;; max lines for completion
 (setq vertico-count 20)
 
