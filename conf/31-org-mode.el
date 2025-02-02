@@ -8,7 +8,10 @@
 
 (setq org-capture-templates
       '(("t" "TODO for me" entry (file+headline "~/org/agenda/me.org" "Inbox")
-         "*** TODO %?\n    CAPTURED_AT: %a\n    %i")))
+         "*** TODO %?\n    CAPTURED_AT: %a\n    %i")
+        ("i" "interrupted task" entry
+         (file "~/org/journal.org")
+         "* %?\n" :clock-in t :clock-resume t)))
 
 (defun my/set-archive-location (&rest _)
   "Set org-archive-location dynamically before archiving"
