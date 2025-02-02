@@ -3,6 +3,7 @@
 (cua-mode)
 (global-auto-revert-mode 1)
 (setq cua-enable-cua-keys nil)
+(setq system-time-locale "C")
 
 ;; for staignt
 (defvar bootstrap-version)
@@ -435,6 +436,11 @@
   :config
   (setq git-link-use-commit t)
   (setq git-link-open-in-browser t))
+
+(use-package org-super-links
+  :straight (org-super-links :type git :host github :repo "toshism/org-super-links" :branch "develop")
+  :config
+  (advice-add 'org-capture :before #'org-super-links-store-link))
 
 ;; max lines for completion
 (setq vertico-count 20)

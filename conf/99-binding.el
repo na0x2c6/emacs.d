@@ -124,3 +124,8 @@ If buffer is not visiting a file, copy buffer name instead."
     (message "Copied to clipboard: %s" result-path)))
 
 (global-set-key (kbd "C-c C-p") 'my/copy-buffer-file-path-to-clipboard)
+
+; org-super-links
+(global-set-key (kbd "C-c s s") 'org-super-links-link)
+(global-set-key (kbd "C-c s l") 'org-super-links-store-link)
+(global-set-key (kbd "C-c s C-l") 'org-super-links-insert-link)
