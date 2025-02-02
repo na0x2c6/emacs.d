@@ -57,3 +57,4 @@ flycheck_*.el
 /migemo-pattern
 /url
 /bookmarks
+/conf/*.custom.el
