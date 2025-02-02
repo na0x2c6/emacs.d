@@ -1,3 +1,6 @@
+(custom-set-variables
+  '(tab-bar-select-tab-modifiers '(super)))
+
 ;; Assign C-h to delete the previous character
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
