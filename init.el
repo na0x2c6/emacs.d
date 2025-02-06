@@ -5,6 +5,8 @@
 (electric-pair-mode -1)
 (setq cua-enable-cua-keys nil)
 (setq system-time-locale "C")
+(setq gc-cons-threshold (* 128 1024 1024))
+(setq read-process-output-max (* 5 1024 1024))
 
 ;; for staignt
 (defvar bootstrap-version)
@@ -295,7 +297,10 @@
 ;; https://github.com/joaotavora/eglot/discussions/1436#discussioncomment-11034903
 ;; lsp
 (use-package eglot
-  :straight t)
+  :straight t
+  :config
+  ; https://joaotavora.github.io/eglot/#Performance-1
+  (setq eglot-events-buffer-config '(:size 0 :format full)))
 
 (use-package eldoc-box
   :straight t
