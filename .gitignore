@@ -58,3 +58,4 @@ flycheck_*.el
 /url
 /bookmarks
 /conf/*.custom.el
+.cache/
