@@ -2,6 +2,7 @@
 (tab-bar-mode 1)
 (cua-mode)
 (global-auto-revert-mode 1)
+(electric-pair-mode -1)
 (setq cua-enable-cua-keys nil)
 (setq system-time-locale "C")
 
@@ -239,6 +240,7 @@
   :config
   (add-to-list 'eglot-server-programs
                '((web-mode) . ("typescript-language-server" "--stdio")))
+  (setq web-mode-enable-auto-quoting nil)
   :mode (("\\.tsx\\'" . web-mode)
 	 ("\\.ts\\'" . web-mode)
 	 ("\\.jsx\\'" . web-mode)
