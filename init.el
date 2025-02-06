@@ -470,3 +470,8 @@
   :straight t
   :config
   (init-loader-load "~/.emacs.d/conf/"))
+
+(use-package yasnippet
+  :straight t
+  :config
+  (yas-global-mode 1))
