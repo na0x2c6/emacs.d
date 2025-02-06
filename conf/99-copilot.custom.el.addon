@@ -1,0 +1,28 @@
+; to use this file: `ln -s 99-copilot.custom.el.addon 99-copilot.custom.el`
+(exec-path-from-shell-initialize)
+(use-package dash
+  :straight t)
+(use-package s
+  :straight t)
+(use-package editorconfig
+  :straight t)
+(use-package f
+  :straight t)
+
+(use-package copilot
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+  :ensure t
+  :hook (prog-mode . copilot-mode)
+  :init (setq copilot-node-executable "~/.nodenv/shims/node")
+
+  :config
+  (setq copilot-max-char -1)
+  (add-to-list 'copilot-indentation-alist '(prog-mode 2))
+  (add-to-list 'copilot-indentation-alist '(org-mode 2))
+  (add-to-list 'copilot-indentation-alist '(text-mode 2))
+  (add-to-list 'copilot-indentation-alist '(closure-mode 2))
+  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2))
+  (define-key evil-insert-state-map (kbd "M-y") 'copilot-accept-completion-by-word)
+  (define-key evil-insert-state-map (kbd "M-Y") 'copilot-accept-completion)
+  (define-key evil-insert-state-map (kbd "M-p") 'copilot-next-completion)
+  (define-key evil-insert-state-map (kbd "M-n") 'copilot-previous-completion))
