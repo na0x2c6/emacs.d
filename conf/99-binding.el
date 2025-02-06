@@ -132,3 +132,9 @@ If buffer is not visiting a file, copy buffer name instead."
 (global-set-key (kbd "C-c s s") 'org-super-links-link)
 (global-set-key (kbd "C-c s l") 'org-super-links-store-link)
 (global-set-key (kbd "C-c s C-l") 'org-super-links-insert-link)
+
+; zoom-frm
+(define-key ctl-x-map [(control ?+)] 'zoom-in/out)
+(define-key ctl-x-map [(control ?-)] 'zoom-in/out)
+(define-key ctl-x-map [(control ?=)] 'zoom-in/out)
+(define-key ctl-x-map [(control ?0)] 'zoom-in/out)

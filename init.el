@@ -431,6 +431,9 @@
   (setq recentf-max-saved-items 30)
   (recentf-mode 1))
 
+(use-package zoom-frm
+  :straight t)
+
 (use-package git-link
   :straight t
   :config
