@@ -138,3 +138,8 @@ If buffer is not visiting a file, copy buffer name instead."
 (define-key ctl-x-map [(control ?-)] 'zoom-in/out)
 (define-key ctl-x-map [(control ?=)] 'zoom-in/out)
 (define-key ctl-x-map [(control ?0)] 'zoom-in/out)
+
+
+; multi-term
+(global-set-key (kbd "C-~") 'multi-term-dedicated-toggle)
+(global-set-key (kbd "C-`") 'my/multi-term-toggle)

@@ -331,11 +331,13 @@
   (global-git-gutter-mode +1)
   (custom-set-variables
    '(git-gutter:update-interval 0.5)))
+
 ;; terminal
 (use-package multi-term
   :straight t
   :config
-  (setq multi-term-program "/usr/bin/zsh"))
+  (setq multi-term-dedicated-select-after-open-p t)
+  (setq multi-term-dedicated-close-back-to-open-buffer-p t))
 
 (use-package migemo
   :straight t
