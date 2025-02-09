@@ -4,6 +4,7 @@
 (global-auto-revert-mode 1)
 (electric-pair-mode -1)
 (setq cua-enable-cua-keys nil)
+(setq require-final-newline nil)
 (setq system-time-locale "C")
 (setq gc-cons-threshold (* 128 1024 1024))
 (setq read-process-output-max (* 5 1024 1024))
