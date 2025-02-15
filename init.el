@@ -129,25 +129,6 @@
 ;; (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
 (load-theme 'nord t)
 
-(use-package fussy
-  :straight t
-  :config
-  (setq fussy-filter-fn 'fussy-filter-default)
-  (setq fussy-use-cache t)
-  (setq fussy-compare-same-score-fn 'fussy-histlen->strlen<)
-  (fussy-setup)
-  (fussy-eglot-setup))
-
-(use-package flx-rs
-  :straight
-  (flx-rs
-   :repo "jcs-elpa/flx-rs"
-   :fetcher github
-   :files (:defaults "bin"))
-  :config
-  (setq fussy-score-fn 'fussy-flx-rs-score)
-  (flx-rs-load-dyn))
-
 (use-package corfu
   :straight t
   :custom
@@ -361,6 +342,43 @@
   (when (commandp 'cmigemo)
     (avy-migemo-mode t)))
 
+(use-package orderless
+  :straight t
+  :init
+  (icomplete-mode)
+  (defun orderless-migemo (component)
+    (let ((pattern (migemo-get-pattern component)))
+      (condition-case nil
+          (progn (string-match-p pattern "") pattern)
+        (invalid-regexp nil))))
+  :config
+
+  (orderless-define-completion-style orderless-default-style
+    (orderless-matching-styles '(orderless-literal
+                                 orderless-regexp)))
+
+  (orderless-define-completion-style orderless-migemo-style
+    (orderless-matching-styles '(orderless-literal
+                                 orderless-regexp
+                                 orderless-migemo)))
+  (orderless-define-completion-style orderless-initialism-style
+    (orderless-matching-styles '(orderless-initialism
+                                 orderless-literal)))
+
+  (setq completion-category-overrides
+        '((command (styles orderless-initialism-style))
+          (file (styles orderless-migemo-style))
+          (buffer (styles orderless-migemo-style))
+          (symbol (styles orderless-default-style))
+          ; for consult-line
+          (consult-location (styles orderless-migemo-style))
+          ; for consult-buffer
+          (multi-category (styles orderless-migemo-style))
+          (org-roam-node (styles orderless-migemo-style))
+          (unicode-name (styles orderless-migemo-style))
+          (variable (styles orderless-default-style))))
+  (setq completion-styles '(orderless)))
+
 (use-package avy
   :straight t)
 
@@ -423,17 +441,6 @@
 	'("C-."
 	  :debounce 0.5 "<up>" "<down>"
 	  :debounce 0.4 any)))
-
-;; Start consult-line search with symbol at point
-;; https://github.com/minad/consult/wiki#start-consult-line-search-with-symbol-at-point
-(defun consult-line-symbol-at-point ()
-  (interactive)
-  (consult-line (thing-at-point 'symbol)))
-
-(defun consult-line-literal ()
-  (interactive)
-  (let ((completion-styles '(fussy basic)))
-    (consult-line)))
 
 (use-package recentf
   :config

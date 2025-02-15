@@ -53,8 +53,9 @@
   (define-key vertico-map (kbd "C-r") 'vertico-previous)
   (define-key vertico-map (kbd "C-s") 'vertico-next))
 
-;; evil
+;; consult
 (define-key evil-normal-state-map (kbd "C-p") 'consult-buffer)
+(global-set-key (kbd "C-s") 'my/isearch-or-consult)
 
 ;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
