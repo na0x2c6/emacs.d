@@ -10,6 +10,8 @@
 (define-key evil-normal-state-map (kbd "s-s") 'save-buffer)
 (define-key evil-normal-state-map (kbd "C-t") 'other-window)
 
+(define-key minibuffer-local-map (kbd "C-l") 'delete-minibuffer-contents)
+
 (defun my/paste-from-system-clipboard ()
   "Paste text from the system clipboard."
   (interactive)
