@@ -262,8 +262,7 @@
   :straight t
   :config
   (add-to-list 'eglot-server-programs
-	       '(php-mode . ("intelephense" "--stdio" :initializationOptions
-			     (:licenseKey "KEY"))))
+	       '(php-mode . ("intelephense" "--stdio")))
   :hook (php-mode . eglot-ensure))
 
 (use-package yaml-mode
