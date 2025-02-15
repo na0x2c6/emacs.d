@@ -14,5 +14,4 @@
   (cond ((eq use-consult 1)
          (call-interactively 'isearch-forward))
         ((eq use-consult 4)
-         (call-interactively 'consult-line-symbol-at-point))
-         (call-interactively 'consult-line-migemo)))
+         (call-interactively 'consult-line-symbol-at-point))))
