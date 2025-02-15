@@ -57,7 +57,7 @@
 
 ;; consult
 (define-key evil-normal-state-map (kbd "C-p") 'consult-buffer)
-(global-set-key (kbd "C-s") 'my/isearch-or-consult)
+(global-set-key (kbd "C-s") 'my/isearch)
 
 ;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
