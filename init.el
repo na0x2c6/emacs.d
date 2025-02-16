@@ -35,15 +35,6 @@
 
 (straight-use-package 'use-package)
 
-;; set custom file
-(setq custom-file (locate-user-emacs-file "custom.el"))
-
-;; create custom file if the file doesn't exist
-(unless (file-exists-p custom-file)
-  (write-region "" nil custom-file))
-
-(load custom-file)
-
 (use-package undo-tree
   :straight t
   :config
