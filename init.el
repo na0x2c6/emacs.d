@@ -510,7 +510,20 @@
   :config
   (init-loader-load "~/.emacs.d/conf/"))
 
+(use-package org-ai
+  :straight t
+  :commands (org-ai-mode
+             org-ai-global-mode)
+  :init
+  (add-hook 'org-mode-hook #'org-ai-mode)
+  (org-ai-global-mode) ; installs global keybindings on C-c M-a
+  :config
+  (setq org-ai-default-chat-model "gpt-4o-mini")
+  (org-ai-install-yasnippets))
+
 (use-package yasnippet
   :straight t
   :config
+  (setq yas-snippet-dirs
+      '("~/.emacs.d/snippets"))
   (yas-global-mode 1))

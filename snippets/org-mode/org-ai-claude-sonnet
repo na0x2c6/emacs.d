@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: org-ai-claude-sonnet
+# key: ai-s
+# --
+* ${1:what}
+#+begin_ai :service anthropic :model claude-3-5-sonnet-latest
+${2:[SYS]: ${3:You are a helpful assistant.}
+
+}[ME]: $0
+#+end_ai
