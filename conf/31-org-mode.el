@@ -7,11 +7,12 @@
   '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c@)")))
 
 (setq org-capture-templates
-      '(("t" "TODO for me" entry (file+headline "~/org/agenda/me.org" "Inbox")
-         "*** TODO %?\n    CAPTURED_AT: %a\n    %i")
+      '(("t" "TODO to GTD inbox" entry (file+headline "~/org/agenda/gtd.org" "Inbox")
+         "*** TODO %?"
+         :jump-to-captured t)
         ("i" "interrupted task" entry
-         (file "~/org/agenda/gtd.org")
-         "* %?\n" :clock-in t :clock-resume t)
+         (file+headline "~/org/agenda/gtd.org" "Inbox")
+         "* %?\n" :clock-in t :clock-resume t :jump-to-captured t)
         ("j" "Journal entry" plain (function my/org-journal-find-location)
          "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
          :jump-to-captured t :immediate-finish t)))
