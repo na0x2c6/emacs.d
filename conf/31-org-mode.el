@@ -10,7 +10,7 @@
       '(("t" "TODO for me" entry (file+headline "~/org/agenda/me.org" "Inbox")
          "*** TODO %?\n    CAPTURED_AT: %a\n    %i")
         ("i" "interrupted task" entry
-         (file "~/org/journal.org")
+         (file "~/org/agenda/gtd.org")
          "* %?\n" :clock-in t :clock-resume t)
         ("j" "Journal entry" plain (function my/org-journal-find-location)
          "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
