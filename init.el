@@ -117,11 +117,45 @@
 (straight-use-package 'consult)
 
 (use-package marginalia
-  :straight t)
+  :straight t
+  :bind (:map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
+  :init
+  (marginalia-mode))
 
 (use-package vertico
-  :straight t)
+  :straight t
+  :init
+  (vertico-mode))
 
+(use-package savehist
+  :init
+  (savehist-mode))
+
+; ref: https://github.com/minad/vertico?tab=readme-ov-file#configuration
+(use-package emacs
+  :custom
+  ;; Support opening new minibuffers from inside existing minibuffers.
+  (enable-recursive-minibuffers t)
+  ;; Hide commands in M-x which do not work in the current mode.  Vertico
+  ;; commands are hidden in normal buffers. This setting is useful beyond
+  ;; Vertico.
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  :init
+  ;; Prompt indicator for `completing-read-multiple'.  Available out of the box
+  ;; on Emacs 31, see `crm-prompt'.
+  (when (< emacs-major-version 31)
+    (advice-add #'completing-read-multiple :filter-args
+                (lambda (args)
+                  (cons (format "[CRM%s] %s"
+                                (string-replace "[ \t]*" "" crm-separator)
+                                (car args))
+                        (cdr args)))))
+
+  ;; Do not allow the cursor in the minibuffer prompt
+  (setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
+  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode))
 
 (straight-use-package 'embark)
 (straight-use-package 'embark-consult)
@@ -356,12 +390,15 @@
   :config
 
   (orderless-define-completion-style orderless-default-style
-    (orderless-matching-styles '(orderless-literal
-                                 orderless-regexp)))
+    (orderless-matching-styles '(orderless-initialism
+                                 orderless-literal
+                                 orderless-regexp
+                                 orderless-flex)))
 
   (orderless-define-completion-style orderless-migemo-style
     (orderless-matching-styles '(orderless-literal
                                  orderless-regexp
+                                 orderless-flex
                                  orderless-migemo)))
 
   (setq completion-category-overrides
@@ -476,14 +513,6 @@
 
 ;; max lines for completion
 (setq vertico-count 20)
-
-;; enable vertico-mode and marginalia-mode
-(defun after-init-hook ()
-  (vertico-mode)
-  (marginalia-mode)
-  ;; enable savehist-mode to persist Vertico order
-  (savehist-mode))
-(add-hook 'after-init-hook #'after-init-hook)
 
 (use-package init-loader
   :straight t
