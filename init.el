@@ -27,6 +27,8 @@
    (load bootstrap-file nil 'nomessage))
 (setq package-enable-at-startup nil)
 
+(straight-use-package 'org)
+
 ;; for workaround
 ;; https://github.com/radian-software/straight.el/issues/1146#issuecomment-1949645571
 (straight-use-package 'project)
@@ -457,6 +459,17 @@
   :straight (org-super-links :type git :host github :repo "toshism/org-super-links" :branch "develop")
   :config
   (advice-add 'org-capture :before #'org-super-links-store-link))
+
+(use-package org-journal
+  :straight t
+  :defer t
+  :init
+  (setq org-journal-prefix-key "C-c j ")
+  :config
+  (setq org-journal-dir "~/org/journal/"
+        org-journal-date-format "%Y-%m-%d %a")
+  (setq org-journal-file-header 'org-journal-file-header-func)
+  (setq org-journal-file-type 'weekly))
 
 (use-package ox-gfm
   :straight t)

@@ -11,7 +11,27 @@
          "*** TODO %?\n    CAPTURED_AT: %a\n    %i")
         ("i" "interrupted task" entry
          (file "~/org/journal.org")
-         "* %?\n" :clock-in t :clock-resume t)))
+         "* %?\n" :clock-in t :clock-resume t)
+        ("j" "Journal entry" plain (function my/org-journal-find-location)
+         "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
+         :jump-to-captured t :immediate-finish t)))
+
+(defun org-journal-file-header-func (time)
+  "Custom function to create journal header."
+  (concat
+    (pcase org-journal-file-type
+      (`daily "#+TITLE: Daily Journal\n#+STARTUP: showeverything")
+      (`weekly "#+TITLE: Weekly Journal\n#+STARTUP: folded")
+      (`monthly "#+TITLE: Monthly Journal\n#+STARTUP: folded")
+      (`yearly "#+TITLE: Yearly Journal\n#+STARTUP: folded"))))
+
+(defun my/org-journal-find-location ()
+  ;; Open today's journal, but specify a non-nil prefix argument in order to
+  ;; inhibit inserting the heading; org-capture will insert the heading.
+  (org-journal-new-entry t)
+  (unless (eq org-journal-file-type 'daily)
+    (org-narrow-to-subtree))
+  (goto-char (point-max)))
 
 (defun my/set-archive-location (&rest _)
   "Set org-archive-location dynamically before archiving"
