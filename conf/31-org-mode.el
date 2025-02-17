@@ -89,3 +89,46 @@ Each path should be a string representing the directory path."
    (perl . t)
    (python . t)
    ))
+
+(defun my/create-journal-entry-on-clock-in ()
+  "Create a journal entry when clocking in, with a super-link to the clocked task."
+  (when (org-clocking-p)
+    (let* ((task-marker org-clock-marker)
+           (task-heading (org-with-point-at task-marker
+                          (org-get-heading t t t t)))
+           (task-buffer (marker-buffer task-marker))
+           (task-position (marker-position task-marker))
+           (current-time (format-time-string "%H:%M"))
+           (journal-file (org-journal--get-entry-path)))
+
+      ;; Create journal entry if it doesn't exist
+      (unless (file-exists-p journal-file)
+        (org-journal-new-entry t))
+
+      ;; Store link at the clocked task first
+      (with-current-buffer task-buffer
+        (goto-char task-position)
+        (org-super-links-store-link))
+
+      ;; Switch to journal file and create entry
+      (let ((journal-buffer (find-file-noselect journal-file)))
+        (with-current-buffer journal-buffer
+          (goto-char (point-max))
+          (unless (bolp) (insert "\n"))
+
+          ;; Add time-stamped entry with super-link
+          (insert (format "** %s " current-time))
+          (let ((link-pos (point)))
+            (goto-char link-pos)
+            (org-super-links-insert-link))
+
+          ;; Save the journal file
+          (save-buffer))
+
+        ;; Switch to journal buffer and move cursor to the new entry
+        (pop-to-buffer journal-buffer)
+        (goto-char (point-max))
+        (org-back-to-heading)))))
+
+;; Add to org-clock-in-hook
+(add-hook 'org-clock-in-hook #'my/create-journal-entry-on-clock-in)
