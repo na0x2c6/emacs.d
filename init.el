@@ -497,7 +497,8 @@
   (setq org-journal-dir "~/org/journal/"
         org-journal-date-format "%Y-%m-%d %a")
   (setq org-journal-file-header 'org-journal-file-header-func)
-  (setq org-journal-file-type 'weekly))
+  (setq org-journal-file-type 'weekly)
+  (setq org-journal-file-format "%Y-%m-%d_journal.org"))
 
 (use-package ox-gfm
   :straight t)
