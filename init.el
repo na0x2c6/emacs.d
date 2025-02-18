@@ -145,8 +145,7 @@
   ; Use migemo for grep
   (defun my/advice--consult--compile-regexp-migemo (orig input type ignore-case)
       "Use migemo to compile INPUT to a list of regular expressions."
-      (let ((migemo-input (migemo-get-pattern input)))
-        (funcall orig migemo-input type ignore-case)))
+      (funcall orig (migemo-get-pattern input) type ignore-case))
   (advice-add 'consult--compile-regexp :around #'my/advice--consult--compile-regexp-migemo))
 
 (use-package marginalia
