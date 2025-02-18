@@ -20,6 +20,12 @@
 (global-set-key (kbd "s-c") 'my/copy-to-system-clipboard)
 (global-set-key (kbd "C-c k") 'my/toggle-select-enable-clipboard)
 
+(define-key isearch-mode-map (kbd "s-v")
+  (lambda ()
+    (interactive)
+    (isearch-yank-string
+     (gui--selection-value-internal 'CLIPBOARD))))
+
 ;; org-mode
 
 (global-set-key (kbd "C-c c") 'org-capture)
