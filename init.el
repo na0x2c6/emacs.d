@@ -8,6 +8,7 @@
 (setq system-time-locale "C")
 (setq gc-cons-threshold (* 128 1024 1024))
 (setq read-process-output-max (* 5 1024 1024))
+(setq org-src-preserve-indentation t)
 
 ;; for staignt
 (defvar bootstrap-version)
