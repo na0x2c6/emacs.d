@@ -99,7 +99,6 @@ Each path should be a string representing the directory path."
            (task-buffer (marker-buffer task-marker))
            (task-position (marker-position task-marker))
            (current-time (format-time-string "%H:%M"))
-           (current-date (format-time-string "%Y-%m-%d %a"))
            (journal-file (org-journal--get-entry-path)))
       ;; Create journal entry if it doesn't exist
       (unless (file-exists-p journal-file)
@@ -111,18 +110,14 @@ Each path should be a string representing the directory path."
       ;; Switch to journal file and create entry
       (let ((journal-buffer (find-file-noselect journal-file)))
         (with-current-buffer journal-buffer
-          (goto-char (point-max))
-          ;; Check if we need to add a date heading
-          (save-excursion
-            (goto-char (point-min))
-            (unless (re-search-forward
-                     (format "\\* %s" current-date) nil t)
-              (goto-char (point-max))
-              (unless (bolp) (insert "\n"))
-              (insert (format "* %s\n" current-date))))
-          ;; Add time-stamped entry with super-link
+          (widen)
+          (goto-char (point-min))
+          (unless (org-journal--daily-p)
+            (org-journal--insert-header nil)
+            (org-journal--insert-entry-header nil))
           (goto-char (point-max))
           (unless (bolp) (insert "\n"))
+          ;; Add time-stamped entry with super-link
           (insert (format "** %s " current-time))
           (let ((link-pos (point)))
             (goto-char link-pos)
