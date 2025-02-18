@@ -108,6 +108,41 @@
 (use-package consult
   :straight t
   :config
+  (defvar my/consult--source-project-file
+    `(:name "Project Whole File"
+            :narrow   (?p . "Project")
+            :category file
+            :face     consult-file
+            :history  file-name-history
+            :state    ,#'consult--file-state
+            :new      ,#'consult--file-action
+            :items
+            ,(lambda ()
+               (let ((current-project (project-current)))
+                 (if current-project
+                     (project-files current-project)
+                   nil))))
+    "Project file candidate source for `project-files'.")
+
+  ;; by typing `?`, show prefix help in mini buffer
+  (define-key consult-narrow-map
+              (vconcat consult-narrow-key "?") #'consult-narrow-help)
+  (add-to-list 'consult-buffer-sources 'my/consult--source-project-file t)
+  (setq consult-project-buffer-sources
+        (list
+         `(:hidden nil :narrow ?b ,@consult--source-project-buffer)
+         `(:hidden nil :narrow ?f ,@my/consult--source-project-file)))
+  ; https://github.com/minad/consult?tab=readme-ov-file#live-previews
+  (consult-customize
+   consult-ripgrep consult-git-grep consult-grep consult-man
+   consult-bookmark consult-recent-file consult-xref
+   consult--source-bookmark consult--source-file-register
+   consult--source-recent-file consult--source-project-recent-file
+   :preview-key
+   '("C-."
+     :debounce 0.5 "<up>" "<down>"
+     :debounce 0.4 any))
+  ; Use migemo for grep
   (defun my/advice--consult--compile-regexp-migemo (orig input type ignore-case)
       "Use migemo to compile INPUT to a list of regular expressions."
       (let ((migemo-input (migemo-get-pattern input)))
@@ -419,42 +454,6 @@
   :straight t
   :config
   (popwin-mode 1))
-
-(defvar my/consult--source-project-file
-  `(:name "Project Whole File"
-          :narrow   (?p . "Project")
-          :category file
-          :face     consult-file
-          :history  file-name-history
-          :state    ,#'consult--file-state
-          :new      ,#'consult--file-action
-          :items
-          ,(lambda ()
-             (let ((current-project (project-current)))
-               (if current-project
-                   (project-files current-project)
-                 nil))))
-  "Project file candidate source for `project-files'.")
-
-;; by typing `?`, show prefix help in mini buffer
-(with-eval-after-load 'consult
-  (define-key consult-narrow-map
-    (vconcat consult-narrow-key "?") #'consult-narrow-help)
-    (add-to-list 'consult-buffer-sources 'my/consult--source-project-file t)
-    (setq consult-project-buffer-sources
-          (list
-           `(:hidden nil :narrow ?b ,@consult--source-project-buffer)
-           `(:hidden nil :narrow ?f ,@my/consult--source-project-file)))
-    ; https://github.com/minad/consult?tab=readme-ov-file#live-previews
-    (consult-customize
-	consult-ripgrep consult-git-grep consult-grep consult-man
-	consult-bookmark consult-recent-file consult-xref
-	consult--source-bookmark consult--source-file-register
-	consult--source-recent-file consult--source-project-recent-file
-	:preview-key
-	'("C-."
-	  :debounce 0.5 "<up>" "<down>"
-	  :debounce 0.4 any)))
 
 (use-package recentf
   :config
