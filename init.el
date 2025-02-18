@@ -105,7 +105,14 @@
   :config
   (setq projectile-enable-caching t))
 
-(straight-use-package 'consult)
+(use-package consult
+  :straight t
+  :config
+  (defun my/advice--consult--compile-regexp-migemo (orig input type ignore-case)
+      "Use migemo to compile INPUT to a list of regular expressions."
+      (let ((migemo-input (migemo-get-pattern input)))
+        (funcall orig migemo-input type ignore-case)))
+  (advice-add 'consult--compile-regexp :around #'my/advice--consult--compile-regexp-migemo))
 
 (use-package marginalia
   :straight t
@@ -373,37 +380,17 @@
   :straight t
   :init
   (icomplete-mode)
-  (defun orderless-migemo (component)
+  (defun my/orderless-migemo (component)
     (let ((pattern (migemo-get-pattern component)))
       (condition-case nil
           (progn (string-match-p pattern "") pattern)
         (invalid-regexp nil))))
   :config
+  (setq orderless-matching-styles '(orderless-literal
+                               orderless-regexp
+                               orderless-flex
+                               my/orderless-migemo))
 
-  (orderless-define-completion-style orderless-default-style
-    (orderless-matching-styles '(orderless-initialism
-                                 orderless-literal
-                                 orderless-regexp
-                                 orderless-flex)))
-
-  (orderless-define-completion-style orderless-migemo-style
-    (orderless-matching-styles '(orderless-literal
-                                 orderless-regexp
-                                 orderless-flex
-                                 orderless-migemo)))
-
-  (setq completion-category-overrides
-        '((command (styles orderless-default-style))
-          (file (styles orderless-migemo-style))
-          (buffer (styles orderless-migemo-style))
-          (symbol (styles orderless-default-style))
-          ; for consult-line
-          (consult-location (styles orderless-migemo-style))
-          ; for consult-buffer
-          (multi-category (styles orderless-migemo-style))
-          (org-roam-node (styles orderless-migemo-style))
-          (unicode-name (styles orderless-migemo-style))
-          (variable (styles orderless-default-style))))
   (setq completion-styles '(orderless)))
 
 (use-package avy
