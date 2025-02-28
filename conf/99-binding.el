@@ -43,6 +43,7 @@
 ;; consult
 (define-key evil-normal-state-map (kbd "C-p") 'consult-buffer)
 (global-set-key (kbd "C-s") 'my/isearch)
+(global-set-key (kbd "M-g") 'consult-git-grep)
 
 ;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
