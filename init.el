@@ -51,7 +51,10 @@
   (setq evil-undo-system 'undo-tree)
   (global-undo-tree-mode 1)
   (setq evil-search-module 'evil-search)
+  (setq evil-symbol-word-search t)
   :config
+  ;; https://emacs.stackexchange.com/a/20717
+  (defalias #'forward-evil-word #'forward-evil-symbol)
   (evil-mode 1))
 
 (use-package evil-collection
