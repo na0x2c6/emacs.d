@@ -10,6 +10,10 @@
 (define-key evil-normal-state-map (kbd "s-s") 'save-buffer)
 (define-key evil-normal-state-map (kbd "C-t") 'other-window)
 
+(define-key evil-normal-state-map (kbd "C-l") 'evil-ex-nohighlight)
+(define-key evil-visual-state-map (kbd "C-l") 'evil-ex-nohighlight)
+(define-key evil-insert-state-map (kbd "C-l") 'evil-ex-nohighlight)
+
 (define-key minibuffer-local-map (kbd "C-l") 'delete-minibuffer-contents)
 
 (global-set-key (kbd "s-t") 'tab-new)
